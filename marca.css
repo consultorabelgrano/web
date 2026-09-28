@@ -1,0 +1,197 @@
+/* ============================================================
+   CONSULTORA BELGRANO · base de marca (marca.css)
+   Traduce el "Manual de marca Consultora Belgrano" a CSS.
+   La usan la web, el brochure para empresas y la placa de servicios.
+   Si cambia algo de la marca, se cambia acá y se actualiza todo.
+   ============================================================ */
+
+/* ---------- Tipografías ----------
+   Gabarito: títulos (semibold 600) y textos (regular 400).
+   Inter Light Italic: citas.
+   Cabinet Grotesk (la del logo) se usa muy poco; se carga aparte
+   solo si una pieza la necesita: https://www.fontshare.com/fonts/cabinet-grotesk */
+@import url('https://fonts.googleapis.com/css2?family=Gabarito:wght@400;600;700&family=Inter:ital,wght@1,300&display=swap');
+
+/* ---------- Tokens ---------- */
+:root {
+  /* Paleta principal */
+  --rojo:     #AE1F1E;
+  --verde1:   #9B9D3A;
+  --violeta1: #731963;
+  --beige:    #F1E2C5;
+  --gris:     #3C3F3B;
+
+  /* Paleta secundaria (acentos, etiquetas, líneas) */
+  --rosado:   #F5897D;
+  --amarillo: #EACA78;
+  --verde2:   #D3D381;
+  --violeta2: #DAA2E0;
+
+  /* Derivados de uso interno (no están en el manual) */
+  --crema:    #FFF8EA;                     /* fondo de tarjetas sobre beige */
+  --linea:    rgba(60, 63, 59, .18);       /* separadores finos sobre beige */
+  --linea-clara: rgba(241, 226, 197, .25); /* separadores sobre gris */
+  --verde1-texto: #6B6D22;                 /* verde 1 oscurecido para texto chico sobre beige */
+
+  /* Tipografía */
+  --font-texto: 'Gabarito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-cita:  'Inter', system-ui, sans-serif;
+  --font-logo:  'Cabinet Grotesk', 'Gabarito', sans-serif;
+
+  /* Escala tipográfica */
+  --fs-xs: 12px;  --fs-sm: 14px;  --fs-md: 16px;  --fs-lg: 18px;
+  --fs-h3: 20px;  --fs-h2: 28px;  --fs-h1: clamp(34px, 5vw, 52px);
+
+  /* Espaciado y forma */
+  --sp-1: 8px; --sp-2: 14px; --sp-3: 20px; --sp-4: 32px; --sp-5: 56px;
+  --radio: 6px;
+  --ancho-max: 1080px;
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--font-texto);
+  font-size: var(--fs-md);
+  line-height: 1.5;
+  color: var(--gris);
+  background: var(--beige);
+}
+h1, h2, h3, h4, p { margin: 0; }
+h1, h2, h3, h4 { font-weight: 600; line-height: 1.2; }
+h1 { font-size: var(--fs-h1); font-weight: 700; line-height: 1.1; }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+
+.wrap { max-width: var(--ancho-max); margin: 0 auto; padding: 0 var(--sp-4); }
+.sec  { padding: var(--sp-5) 0; border-top: 1px solid var(--linea); }
+
+/* ---------- Texto ---------- */
+.eyebrow {            /* etiqueta chica sobre un título de sección */
+  font-size: var(--fs-xs); letter-spacing: .1em; text-transform: uppercase;
+  color: var(--rojo); font-weight: 600; margin-bottom: var(--sp-1);
+}
+.lead { font-size: 20px; }
+.cita {
+  font-family: var(--font-cita); font-style: italic; font-weight: 300;
+  font-size: var(--fs-lg); border-left: 3px solid var(--rojo); padding-left: var(--sp-2);
+}
+.tag { font-size: var(--fs-xs); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+
+/* ---------- Fondos de color con su texto permitido ----------
+   Cada clase fija fondo Y color de texto según las combinaciones
+   que el manual autoriza. Usar siempre estas clases en lugar de
+   combinar colores a mano. */
+.bg-rojo     { background: var(--rojo);     color: var(--beige); }
+.bg-violeta  { background: var(--violeta1); color: var(--beige); }
+.bg-verde    { background: var(--verde1);   color: var(--gris);  }
+.bg-gris     { background: var(--gris);     color: var(--beige); }
+.bg-beige    { background: var(--beige);    color: var(--gris);  }
+.bg-crema    { background: var(--crema);    color: var(--gris);  }
+/* Secundaria como fondo: siempre con texto gris (o rojo / violeta 1) */
+.bg-rosado   { background: var(--rosado);   color: var(--gris); }
+.bg-amarillo { background: var(--amarillo); color: var(--gris); }
+.bg-verde2   { background: var(--verde2);   color: var(--gris); }
+.bg-violeta2 { background: var(--violeta2); color: var(--gris); }
+
+/* Acentos de la secundaria sobre fondos oscuros (rojo, violeta, gris) */
+.bg-rojo .acento-1, .bg-violeta .acento-1, .bg-gris .acento-1 { color: var(--rosado); }
+.bg-rojo .acento-2, .bg-violeta .acento-2, .bg-gris .acento-2 { color: var(--verde2); }
+.bg-rojo .acento-3, .bg-violeta .acento-3, .bg-gris .acento-3 { color: var(--violeta2); }
+.bg-rojo .acento-4, .bg-violeta .acento-4, .bg-gris .acento-4 { color: var(--amarillo); }
+.bg-violeta .eyebrow, .bg-gris .eyebrow { color: var(--amarillo); }
+.bg-rojo .eyebrow { color: var(--beige); opacity: .85; }
+
+/* EVITAR (según el manual): violeta 1 sobre gris y viceversa; rojo sobre violeta y
+   viceversa; verde 1 sobre rojo; amarillo o verde 2 como TEXTO sobre beige;
+   verde 1 como texto sobre la secundaria. Las clases de arriba ya lo respetan. */
+
+/* ---------- Componentes ---------- */
+.btn {
+  display: inline-flex; align-items: center; gap: var(--sp-1);
+  padding: 9px 16px; border-radius: 5px; font-weight: 600; font-size: 15px;
+  border: 0; cursor: pointer; font-family: inherit;
+}
+.btn-rojo  { background: var(--rojo);   color: var(--beige); }
+.btn-beige { background: var(--beige);  color: var(--rojo);  }
+.btn-verde { background: var(--verde1); color: var(--gris);  }
+.btn-borde { background: transparent; border: 1px solid currentColor; }
+
+.card {                     /* tarjeta sobre beige */
+  background: var(--crema); border: 1px solid var(--linea); border-radius: var(--radio);
+  padding: var(--sp-3); display: flex; flex-direction: column; gap: var(--sp-1);
+}
+.card h3 { font-size: var(--fs-lg); line-height: 1.3; }
+.card p  { font-size: 15px; }
+
+.bloque {                   /* bloque de color pleno (usar con .bg-*) */
+  padding: 22px; border-radius: var(--radio);
+}
+
+.pill {                     /* etiqueta con fondo de la secundaria */
+  display: inline-block; font-size: 11px; letter-spacing: .08em; font-weight: 600;
+  padding: 3px 10px; border-radius: 4px; background: var(--rosado); color: var(--gris);
+  align-self: flex-start;
+}
+
+.servicio {                 /* ítem de servicio con línea de color arriba */
+  padding-top: 12px; border-top: 4px solid var(--rosado);
+}
+.servicio h3 { font-size: var(--fs-lg); margin-bottom: 4px; }
+.servicio p  { font-size: 15px; }
+.linea-rosado   { border-color: var(--rosado); }
+.linea-amarillo { border-color: var(--amarillo); }
+.linea-verde2   { border-color: var(--verde2); }
+.linea-violeta2 { border-color: var(--violeta2); }
+
+.fila-link {                /* fila de lista con flecha (notas en medios, documentos) */
+  display: flex; justify-content: space-between; align-items: center; gap: var(--sp-2);
+  padding: var(--sp-2) 0; border-bottom: 1px solid var(--linea);
+}
+.fila-link:last-of-type { border-bottom: none; }
+.fila-link .medio  { font-size: var(--fs-xs); color: var(--rojo); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+.fila-link .titulo { font-weight: 600; font-size: 17px; }
+.fila-link:hover .titulo { color: var(--rojo); }
+
+.link { color: var(--rojo); font-weight: 600; font-size: var(--fs-sm); display: inline-flex; align-items: center; gap: 6px; }
+
+.avatar {
+  width: 64px; height: 64px; border-radius: 50%; overflow: hidden; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 20px;
+}
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+.grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+
+svg.icono {
+  width: 1.15em; height: 1.15em; fill: none; stroke: currentColor;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0;
+}
+
+/* ---------- Logo ----------
+   Archivos en marca/img/:
+   logotipo.png (rojo sobre beige) · logotipo-sobre-rojo.png · logotipo-sobre-violeta.png ·
+   logotipo-sobre-verde.png · isologo-rojo.png / -violeta / -verde (banderín sobre beige) ·
+   isologo-beige-sobre-rojo.png (banderín beige en cuadrado rojo, para redes) · favicon.png */
+.logo    { height: 52px; width: auto; }
+.logo-sm { height: 36px; width: auto; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+  .wrap { padding: 0 20px; }
+  .sec  { padding: 40px 0; }
+  h2 { font-size: 24px; }
+}
+
+/* ---------- Impresión / PDF ---------- */
+@media print {
+  @page { size: A4; margin: 0; }
+  body { font-size: 13px; }
+  .sec { padding: 28px 0; }
+  .card, .servicio, .fila-link, .bloque { break-inside: avoid; }
+  a[href]::after { content: none; }
+}

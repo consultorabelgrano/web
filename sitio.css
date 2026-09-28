@@ -1,0 +1,108 @@
+/* Estilos propios del sitio. Los colores, tipografías y componentes
+   base vienen de marca.css (copia de web_CB/marca/marca.css). */
+
+:root { --alto-header: 81px; }
+
+/* Al saltar a una sección desde el menú, dejar lugar para el header fijo */
+section[id], footer[id] { scroll-margin-top: var(--alto-header); }
+
+/* ---------- Header ---------- */
+header.top { position: sticky; top: 0; z-index: 20; background: var(--beige); border-bottom: 1px solid var(--linea); }
+header.top nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; flex-wrap: wrap; }
+header.top ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 22px; align-items: center; font-size: 15px; flex-wrap: wrap; }
+header.top ul a:not(.btn):hover { color: var(--rojo); }
+
+/* ---------- Portada ---------- */
+.hero { padding: 88px 0; }
+.hero .kicker { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; opacity: .85; margin-bottom: 14px; }
+.hero h1 { max-width: 700px; }
+.hero h1 span { display: block; }
+.hero .lead { margin-top: 18px; max-width: 620px; }
+.hero .btn { margin-top: 30px; }
+
+/* Slogan: la segunda frase entra deslizándose */
+.hero h1 .frase-2 { opacity: 0; transform: translateY(14px); animation: entra .9s ease-out 1s forwards; }
+.hero .lead, .hero .btn { opacity: 0; animation: aparece .8s ease-out 1.8s forwards; }
+@keyframes entra   { to { opacity: 1; transform: none; } }
+@keyframes aparece { to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .hero h1 .frase-2, .hero .lead, .hero .btn { animation: none; opacity: 1; transform: none; }
+}
+
+/* ---------- Informes: carrusel ---------- */
+.carrusel { position: relative; }
+.carrusel-pista {
+  display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 36px) / 3);
+  gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
+  padding-bottom: 6px; scrollbar-width: thin;
+}
+.carrusel-pista > * { scroll-snap-align: start; }
+.carrusel-controles { display: flex; gap: 8px; justify-content: flex-end; margin-top: 14px; }
+.carrusel-controles button {
+  width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--gris); background: transparent;
+  color: var(--gris); cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+}
+.carrusel-controles button:hover:not(:disabled) { background: var(--gris); color: var(--beige); }
+.carrusel-controles button:disabled { opacity: .3; cursor: default; }
+.carrusel.sin-desborde .carrusel-controles { display: none; }
+@media (max-width: 900px) { .carrusel-pista { grid-auto-columns: calc((100% - 18px) / 2); } }
+@media (max-width: 600px) { .carrusel-pista { grid-auto-columns: 85%; } }
+
+.card .link { margin-top: auto; align-self: flex-start; }
+button.link { background: none; border: 0; padding: 0; font-family: inherit; cursor: pointer; }
+button.link:hover { text-decoration: underline; }
+button.link:focus-visible { outline: 2px solid var(--rojo); outline-offset: 3px; border-radius: 2px; }
+dialog.caso .cabecera { padding-right: 56px; }
+dialog.caso .tag { display: block; margin-bottom: 4px; }
+.card .doc { margin-top: auto; font-size: var(--fs-sm); font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+.card .doc:hover { color: var(--rojo); }
+
+/* ---------- Nosotros ---------- */
+.nosotros .intro { font-size: 22px; font-weight: 600; line-height: 1.35; max-width: 720px; }
+.nosotros .sub { font-size: 17px; margin-top: 14px; max-width: 720px; }
+.equipo { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top: 32px; }
+.persona {
+  display: flex; gap: 14px; align-items: center; text-align: left; background: none; border: 0; padding: 8px;
+  margin: -8px; border-radius: var(--radio); font: inherit; color: inherit; cursor: pointer;
+}
+.persona:hover, .persona:focus-visible { background: var(--crema); }
+.persona:focus-visible { outline: 2px solid var(--rojo); outline-offset: 2px; }
+.persona .datos { display: flex; flex-direction: column; }
+.persona .nombre { font-size: 17px; font-weight: 600; }
+.persona .core { font-size: 14px; }
+.persona .ver { font-size: 12px; color: var(--rojo); font-weight: 600; margin-top: 2px; }
+.persona .avatar { width: 72px; height: 72px; }
+
+/* Ventana de bio */
+dialog.bio {
+  border: 0; border-radius: 10px; padding: 0; max-width: 520px; width: calc(100% - 40px);
+  background: var(--beige); color: var(--gris); box-shadow: 0 20px 60px rgba(0,0,0,.25);
+}
+dialog.bio::backdrop { background: rgba(60, 63, 59, .55); }
+dialog.bio .cabecera { display: flex; gap: 18px; align-items: center; padding: 24px 24px 0; }
+dialog.bio .avatar { width: 96px; height: 96px; }
+dialog.bio h3 { font-size: 22px; }
+dialog.bio .core { font-size: 14px; color: var(--rojo); font-weight: 600; margin-top: 2px; }
+dialog.bio .texto { padding: 18px 24px 24px; font-size: 16px; }
+dialog.bio .acciones { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 0 24px 24px; }
+dialog.bio .cerrar {
+  position: absolute; top: 12px; right: 12px; width: 36px; height: 36px; border-radius: 50%;
+  border: 0; background: transparent; color: var(--gris); cursor: pointer; font-size: 22px; line-height: 1;
+}
+dialog.bio .cerrar:hover { background: var(--crema); }
+
+/* ---------- Pie ---------- */
+footer.pie { padding: 48px 0 28px; }
+.cta { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+.cta p { font-size: 15px; color: var(--verde2); margin-top: 4px; }
+.pie-base { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--linea-clara); flex-wrap: wrap; gap: 12px; }
+.pie-base small { font-size: 13px; opacity: .8; }
+.redes { display: flex; gap: 10px; }
+.redes a { width: 40px; height: 40px; border: 1px solid var(--beige); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
+.redes a:hover { background: var(--beige); color: var(--gris); }
+
+@media (max-width: 640px) {
+  :root { --alto-header: 120px; }
+  header.top ul { gap: 14px; font-size: 14px; }
+  .hero { padding: 56px 0; }
+}
