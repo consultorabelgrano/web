@@ -3,14 +3,46 @@
 
 :root { --alto-header: 81px; }
 
-/* Al saltar a una sección desde el menú, dejar lugar para el header fijo */
+/* ---------- Accesibilidad y lectura ---------- */
 section[id], footer[id] { scroll-margin-top: var(--alto-header); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* Foco visible al navegar con teclado (links, botones, tarjetas) */
+a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
+  outline: 3px solid var(--rojo); outline-offset: 3px; border-radius: 3px;
+}
+.bg-rojo a:focus-visible, .bg-rojo button:focus-visible,
+.bg-violeta a:focus-visible, .bg-gris a:focus-visible { outline-color: var(--amarillo); }
+
+/* Link para saltar al contenido (solo aparece al tabular) */
+.saltar { position: absolute; left: 16px; top: -60px; z-index: 50; padding: 10px 16px; border-radius: 6px; background: var(--gris); color: var(--beige); font-weight: 600; }
+.saltar:focus { top: 12px; }
+
+/* Textos un poco más grandes en pantallas grandes */
+@media (min-width: 900px) {
+  .sec { padding: 72px 0; }
+  .card p, .servicio p, .bloque p { font-size: 16px; }
+  .fila-link .titulo { font-size: 18px; }
+}
+.tag { font-size: 13px; }
+.pill { font-size: 12px; }
+.card h3 { font-size: 19px; }
+.servicio h3 { font-size: 19px; }
 
 /* ---------- Header ---------- */
 header.top { position: sticky; top: 0; z-index: 20; background: var(--beige); border-bottom: 1px solid var(--linea); }
-header.top nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; flex-wrap: wrap; }
-header.top ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 22px; align-items: center; font-size: 15px; flex-wrap: wrap; }
+header.top nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; }
+header.top ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 22px; align-items: center; font-size: 15px; }
+header.top ul a:not(.btn) { padding: 6px 2px; display: inline-block; }
 header.top ul a:not(.btn):hover { color: var(--rojo); }
+.menu-btn {
+  display: none; width: 44px; height: 44px; border: 1px solid var(--gris); border-radius: 6px;
+  background: transparent; color: var(--gris); cursor: pointer; align-items: center; justify-content: center;
+}
+.menu-btn svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.menu-btn .cerrar-ico { display: none; }
+.menu-btn[aria-expanded="true"] .abrir-ico { display: none; }
+.menu-btn[aria-expanded="true"] .cerrar-ico { display: block; }
 
 /* ---------- Portada ---------- */
 .hero { padding: 88px 0; }
@@ -29,33 +61,45 @@ header.top ul a:not(.btn):hover { color: var(--rojo); }
   .hero h1 .frase-2, .hero .lead, .hero .btn { animation: none; opacity: 1; transform: none; }
 }
 
-/* ---------- Informes: carrusel ---------- */
-.carrusel { position: relative; }
-.carrusel-pista {
-  display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 36px) / 3);
-  gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
-  padding-bottom: 6px; scrollbar-width: thin;
-}
-.carrusel-pista > * { scroll-snap-align: start; }
-.carrusel-controles { display: flex; gap: 8px; justify-content: flex-end; margin-top: 14px; }
+/* ---------- Método ---------- */
+.metodo .num { font-size: 34px; font-weight: 700; line-height: 1; margin-bottom: 8px; }
+.metodo p { font-size: 17px; }
+
+/* ---------- Informes ----------
+   Hasta 6 informes se muestran en grilla (3 por fila). Con 7 o más, el JS
+   agrega .modo-carrusel y aparecen las flechas. */
+.informes-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.carrusel-controles { display: none; gap: 8px; justify-content: flex-end; margin-top: 14px; }
 .carrusel-controles button {
-  width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--gris); background: transparent;
+  width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--gris); background: transparent;
   color: var(--gris); cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
 }
 .carrusel-controles button:hover:not(:disabled) { background: var(--gris); color: var(--beige); }
 .carrusel-controles button:disabled { opacity: .3; cursor: default; }
-.carrusel.sin-desborde .carrusel-controles { display: none; }
-@media (max-width: 900px) { .carrusel-pista { grid-auto-columns: calc((100% - 18px) / 2); } }
-@media (max-width: 600px) { .carrusel-pista { grid-auto-columns: 85%; } }
+.modo-carrusel .informes-grid {
+  grid-auto-flow: column; grid-auto-columns: calc((100% - 36px) / 3); grid-template-columns: none;
+  overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding-bottom: 6px; scrollbar-width: thin;
+}
+.modo-carrusel .informes-grid > * { scroll-snap-align: start; }
+.modo-carrusel .carrusel-controles { display: flex; }
+@media (max-width: 900px) {
+  .informes-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .modo-carrusel .informes-grid { grid-auto-columns: calc((100% - 18px) / 2); }
+}
+@media (max-width: 600px) {
+  .informes-grid { grid-template-columns: 1fr; }
+  .modo-carrusel .informes-grid { grid-auto-columns: 85%; }
+}
 
 .card .link { margin-top: auto; align-self: flex-start; }
 button.link { background: none; border: 0; padding: 0; font-family: inherit; cursor: pointer; }
 button.link:hover { text-decoration: underline; }
-button.link:focus-visible { outline: 2px solid var(--rojo); outline-offset: 3px; border-radius: 2px; }
 dialog.caso .cabecera { padding-right: 56px; }
 dialog.caso .tag { display: block; margin-bottom: 4px; }
-.card .doc { margin-top: auto; font-size: var(--fs-sm); font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+.card .doc { margin-top: auto; font-size: var(--fs-sm); font-weight: 600; display: inline-flex; align-items: center; gap: 6px; padding: 4px 0; }
 .card .doc:hover { color: var(--rojo); }
+
+.medios { margin-top: 56px; }
 
 /* ---------- Nosotros ---------- */
 .nosotros .intro { font-size: 22px; font-weight: 600; line-height: 1.35; max-width: 720px; }
@@ -66,16 +110,16 @@ dialog.caso .tag { display: block; margin-bottom: 4px; }
   margin: -8px; border-radius: var(--radio); font: inherit; color: inherit; cursor: pointer;
 }
 .persona:hover, .persona:focus-visible { background: var(--crema); }
-.persona:focus-visible { outline: 2px solid var(--rojo); outline-offset: 2px; }
 .persona .datos { display: flex; flex-direction: column; }
 .persona .nombre { font-size: 17px; font-weight: 600; }
 .persona .core { font-size: 14px; }
-.persona .ver { font-size: 12px; color: var(--rojo); font-weight: 600; margin-top: 2px; }
+.persona .ver { font-size: 13px; color: var(--rojo); font-weight: 600; margin-top: 2px; }
 .persona .avatar { width: 72px; height: 72px; }
 
-/* Ventana de bio */
+/* Ventana de bio y de casos */
 dialog.bio {
   border: 0; border-radius: 10px; padding: 0; max-width: 520px; width: calc(100% - 40px);
+  max-height: calc(100vh - 40px); overflow: auto;
   background: var(--beige); color: var(--gris); box-shadow: 0 20px 60px rgba(0,0,0,.25);
 }
 dialog.bio::backdrop { background: rgba(60, 63, 59, .55); }
@@ -83,11 +127,11 @@ dialog.bio .cabecera { display: flex; gap: 18px; align-items: center; padding: 2
 dialog.bio .avatar { width: 96px; height: 96px; }
 dialog.bio h3 { font-size: 22px; }
 dialog.bio .core { font-size: 14px; color: var(--rojo); font-weight: 600; margin-top: 2px; }
-dialog.bio .texto { padding: 18px 24px 24px; font-size: 16px; }
+dialog.bio .texto { padding: 18px 24px 24px; font-size: 16px; line-height: 1.55; }
 dialog.bio .acciones { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 0 24px 24px; }
 dialog.bio .cerrar {
-  position: absolute; top: 12px; right: 12px; width: 36px; height: 36px; border-radius: 50%;
-  border: 0; background: transparent; color: var(--gris); cursor: pointer; font-size: 22px; line-height: 1;
+  position: absolute; top: 10px; right: 10px; width: 44px; height: 44px; border-radius: 50%;
+  border: 0; background: transparent; color: var(--gris); cursor: pointer; font-size: 26px; line-height: 1;
 }
 dialog.bio .cerrar:hover { background: var(--crema); }
 
@@ -95,14 +139,31 @@ dialog.bio .cerrar:hover { background: var(--crema); }
 footer.pie { padding: 48px 0 28px; }
 .cta { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
 .cta p { font-size: 15px; color: var(--verde2); margin-top: 4px; }
+.cta .btn { max-width: 100%; white-space: normal; word-break: break-all; }
 .pie-base { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--linea-clara); flex-wrap: wrap; gap: 12px; }
 .pie-base small { font-size: 13px; opacity: .8; }
 .redes { display: flex; gap: 10px; }
-.redes a { width: 40px; height: 40px; border: 1px solid var(--beige); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
+.redes a { width: 44px; height: 44px; border: 1px solid var(--beige); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
 .redes a:hover { background: var(--beige); color: var(--gris); }
 
-@media (max-width: 640px) {
-  :root { --alto-header: 120px; }
-  header.top ul { gap: 14px; font-size: 14px; }
+/* ---------- Celular ---------- */
+@media (max-width: 760px) {
+  :root { --alto-header: 73px; }
+  .menu-btn { display: inline-flex; }
+  header.top ul {
+    display: none; position: absolute; left: 0; right: 0; top: 100%; flex-direction: column; align-items: stretch;
+    gap: 0; background: var(--beige); border-bottom: 1px solid var(--linea); padding: 8px 20px 16px;
+    box-shadow: 0 16px 30px rgba(60,63,59,.12);
+  }
+  header.top nav { position: relative; }
+  header.top.abierto ul { display: flex; }
+  header.top ul li { border-top: 1px solid var(--linea); }
+  header.top ul a:not(.btn) { display: block; padding: 14px 4px; font-size: 17px; }
+  header.top ul li:last-child { border-top: 0; padding-top: 12px; }
+  header.top ul .btn { display: flex; justify-content: center; }
   .hero { padding: 56px 0; }
+  .hero .lead { font-size: 18px; }
+  .nosotros .intro { font-size: 20px; }
+  .cta { flex-direction: column; align-items: flex-start; }
+  .cta .btn { width: 100%; justify-content: center; }
 }

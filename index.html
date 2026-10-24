@@ -14,6 +14,7 @@
 <meta property="og:url" content="https://consultorabelgrano.com/">
 <meta property="og:image" content="https://consultorabelgrano.com/og-imagen.png">
 <meta property="og:locale" content="es_AR">
+<meta name="theme-color" content="#AE1F1E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="marca.css">
@@ -21,11 +22,17 @@
 </head>
 <body>
 
+<a class="saltar" href="#inicio">Ir al contenido</a>
+
 <header class="top">
   <div class="wrap">
     <nav aria-label="Principal">
       <a href="#inicio"><img class="logo" src="logo.png" alt="Consultora Belgrano" width="144" height="52"></a>
-      <ul>
+      <button type="button" class="menu-btn" aria-expanded="false" aria-controls="menu" aria-label="Abrir menú">
+        <svg class="abrir-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="cerrar-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+      <ul id="menu">
         <li><a href="#servicios">Servicios</a></li>
         <li><a href="#metodo">Método</a></li>
         <li><a href="#experiencia">Experiencia</a></li>
@@ -74,14 +81,14 @@
   </div>
 </section>
 
-<section class="sec bg-violeta" id="metodo" style="border-top:none">
+<section class="sec bg-violeta metodo" id="metodo" style="border-top:none">
   <div class="wrap">
     <p class="eyebrow">Método</p>
     <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
-      <div><p class="acento-1" style="font-size:34px;font-weight:700;line-height:1;margin-bottom:8px">01</p><p>Vamos al territorio con rigor metodológico</p></div>
-      <div><p class="acento-2" style="font-size:34px;font-weight:700;line-height:1;margin-bottom:8px">02</p><p>Combinamos encuestas, entrevistas y escucha digital</p></div>
-      <div><p class="acento-3" style="font-size:34px;font-weight:700;line-height:1;margin-bottom:8px">03</p><p>Traducimos datos complejos en decisiones</p></div>
-      <div><p class="acento-4" style="font-size:34px;font-weight:700;line-height:1;margin-bottom:8px">04</p><p>Aportamos al debate público informado</p></div>
+      <div><p class="num acento-1">01</p><p>Vamos al territorio con rigor metodológico</p></div>
+      <div><p class="num acento-2">02</p><p>Combinamos encuestas, entrevistas y escucha digital</p></div>
+      <div><p class="num acento-3">03</p><p>Traducimos datos complejos en decisiones</p></div>
+      <div><p class="num acento-4">04</p><p>Aportamos al debate público informado</p></div>
     </div>
   </div>
 </section>
@@ -100,9 +107,10 @@
 <section class="sec" id="informes">
   <div class="wrap">
     <p class="eyebrow">Informes</p>
-    <!-- Para sumar un informe: copiar un bloque <article class="card">, cambiar textos y el link al PDF (subirlo a /informes). El más nuevo va primero. -->
-    <div class="carrusel" data-carrusel>
-      <div class="carrusel-pista" tabindex="0" aria-label="Informes publicados">
+    <h2 style="margin-bottom:20px">Informes y análisis</h2>
+    <!-- Para sumar un informe: copiar un bloque <article class="card">, cambiar textos y el link al PDF. El más nuevo va primero. Hasta 6 se ven en grilla; con 7 o más aparecen las flechas solas. -->
+    <div data-carrusel>
+      <div class="informes-grid" aria-label="Informes publicados">
         <article class="card"><span class="pill">OCTUBRE 2026 · MORA Y EMPLEO</span><h3>La calidad del empleo importa: qué explica la mora en Catamarca</h3><p>Informalidad y empleo público explican por qué uno de cada tres deudores catamarqueños está en mora. Con datos del Mapa de la Deuda, EPH y OEDE.</p><a class="doc" href="mora-empleo-catamarca-octubre-2026.pdf" target="_blank" rel="noopener"><svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/><path d="M9 13h6M9 17h6"/></svg> Leer informe (PDF)</a></article>
         <article class="card"><span class="pill">SEPTIEMBRE 2026 · DATOS BCRA</span><h3>La mora en Catamarca y el NOA</h3><p>Uno de cada tres deudores catamarqueños tiene una deuda impaga. En base al Mapa de la Deuda (CEC–FES).</p><a class="doc" href="mora-catamarca-noa-septiembre-2026.pdf" target="_blank" rel="noopener"><svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/><path d="M9 13h6M9 17h6"/></svg> Leer informe (PDF)</a></article>
         <article class="card"><span class="pill">ABRIL 2025 · 1.103 CASOS</span><h3>Relevamiento Gran Catamarca</h3><p>Clima social, problemáticas y evaluación de gestión en los tres municipios.</p><a class="doc" href="relevamiento-gran-catamarca-abril-2025.pdf" target="_blank" rel="noopener"><svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/><path d="M9 13h6M9 17h6"/></svg> Leer informe (PDF)</a></article>
@@ -115,7 +123,7 @@
       </div>
     </div>
 
-    <div style="margin-top:48px">
+    <div class="medios">
       <h2 style="margin-bottom:6px">En los medios</h2>
       <a class="fila-link" href="https://www.eldiarioar.com/opinion/milei-margen_129_13552147.html" target="_blank" rel="noopener"><div><p class="medio">elDiarioAR · octubre 2026</p><p class="titulo">Milei sin margen</p></div><svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
       <a class="fila-link" href="https://www.instagram.com/reel/DdHpQXRz9Ln/" target="_blank" rel="noopener"><div><p class="medio">Radio Continental Córdoba · Refresh · todos los jueves</p><p class="titulo">Columna económica semanal</p></div><svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
@@ -135,15 +143,15 @@
     <p class="sub">Acompañamos a gobiernos, empresas y organizaciones a comprender el territorio en el que actúan y a tomar decisiones informadas en un contexto de constante transformación.</p>
     <div class="equipo">
       <button type="button" class="persona" data-bio="bio-joaquin" aria-haspopup="dialog">
-        <span class="avatar"><img src="joaquin-taborda.jpg" alt="" width="72" height="72"></span>
+        <span class="avatar"><img src="joaquin-taborda.jpg" alt="" width="72" height="72" loading="lazy"></span>
         <span class="datos"><span class="nombre">Joaquín Taborda</span><span class="core">Economía política y análisis de datos</span><span class="ver">Ver bio</span></span>
       </button>
       <button type="button" class="persona" data-bio="bio-sofia" aria-haspopup="dialog">
-        <span class="avatar"><img src="sofia-santamarina.jpg" alt="" width="72" height="72"></span>
+        <span class="avatar"><img src="sofia-santamarina.jpg" alt="" width="72" height="72" loading="lazy"></span>
         <span class="datos"><span class="nombre">Sofía Santamarina</span><span class="core">Datos, IA aplicada e investigación social</span><span class="ver">Ver bio</span></span>
       </button>
       <button type="button" class="persona" data-bio="bio-franco" aria-haspopup="dialog">
-        <span class="avatar"><img src="franco-aguirre.jpg" alt="" width="72" height="72"></span>
+        <span class="avatar"><img src="franco-aguirre.jpg" alt="" width="72" height="72" loading="lazy"></span>
         <span class="datos"><span class="nombre">Franco Aguirre</span><span class="core">Política y economía internacional</span><span class="ver">Ver bio</span></span>
       </button>
     </div>

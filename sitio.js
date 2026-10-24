@@ -12,7 +12,21 @@
   else window.addEventListener('resize', medir);
 })();
 
-// 2. Ventanas emergentes: bios del equipo (data-bio) y casos de Experiencia (data-dialogo).
+// 2. Menú en celular: botón que abre y cierra la lista.
+(function () {
+  var header = document.querySelector('header.top');
+  var boton = document.querySelector('.menu-btn');
+  if (!header || !boton) return;
+  function cerrar() { header.classList.remove('abierto'); boton.setAttribute('aria-expanded', 'false'); }
+  boton.addEventListener('click', function () {
+    var abierto = header.classList.toggle('abierto');
+    boton.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+  });
+  header.querySelectorAll('ul a').forEach(function (a) { a.addEventListener('click', cerrar); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') cerrar(); });
+})();
+
+// 3. Ventanas emergentes: bios del equipo (data-bio) y casos de Experiencia (data-dialogo).
 (function () {
   document.querySelectorAll('[data-bio], [data-dialogo]').forEach(function (boton) {
     var dialogo = document.getElementById(boton.getAttribute('data-bio') || boton.getAttribute('data-dialogo'));
@@ -32,19 +46,23 @@
   });
 })();
 
-// 3. Carrusel de informes: flechas que avanzan de a una tarjeta.
+// 4. Informes: hasta 6 se muestran en grilla; con 7 o más pasa a carrusel con flechas.
 (function () {
+  var MAX_EN_GRILLA = 6;
   document.querySelectorAll('[data-carrusel]').forEach(function (c) {
-    var pista = c.querySelector('.carrusel-pista');
+    var pista = c.querySelector('.informes-grid');
     var ant = c.querySelector('[data-anterior]');
     var sig = c.querySelector('[data-siguiente]');
+    if (!pista || !ant || !sig) return;
+    var esCarrusel = pista.children.length > MAX_EN_GRILLA;
+    c.classList.toggle('modo-carrusel', esCarrusel);
+    if (!esCarrusel) return;
     function paso() {
       var t = pista.firstElementChild;
       return t ? t.getBoundingClientRect().width + 18 : pista.clientWidth;
     }
     function actualizar() {
       var max = pista.scrollWidth - pista.clientWidth - 2;
-      c.classList.toggle('sin-desborde', max <= 0);
       ant.disabled = pista.scrollLeft <= 2;
       sig.disabled = pista.scrollLeft >= max;
     }
